@@ -1,22 +1,57 @@
 # Syndio Backend App
 
-Using the `employees.db` sqlite database in this repository with the following table/data:
+## Requirements
+This project requires Python3 be installed on your machine. You can download the latest version at https://www.python.org/downloads/
 
+Install Flask using `pip`. I recommend using a virtual environment if already activated.
 ```
-sqlite> .open employees.db
-sqlite> .schema employees
-CREATE TABLE employees (id INTEGER PRIMARY KEY, gender TEXT not null);
-sqlite> SELECT * FROM employees;
-1|male
-2|male
-3|male
-4|female
-5|female
-6|female
+pip install Flask
 ```
 
-Create an api with an endpoint `/employees` that reads from this database and returns the following JSON response (content matters not format/indent):
 
+## Instructions
+
+### Set Port
+Set a permanent environment variable `$PORT` to a port number of your choosing. This will be the port used to run your flask app.
+Because we will be using separate terminals to run the application and make requests, the environment variable cannot be temporary.
+
+EX.
+
+Edit ```~/.bash_profile``` with a text editor. Use the export command to add the new `PORT` environment variable as shown.
+Save changes.
+
+```
+PORT=5432
+export PORT
+```
+
+### Run App
+Open a terminal and navigate to the project path `/backend-engineer-app`.
+
+Run the following to start the Flask application.
+
+```
+export FLASK_APP=app.py
+python -m flask run -h localhost -p $PORT
+```
+
+You should see this in your terminal
+```
+ * Serving Flask app 'app.py' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://localhost:5432 (Press CTRL+C to quit)
+```
+
+### Request
+In a separate terminal, type the following command:
+```
+curl localhost:$PORT/employees
+```
+
+### Result
 ```
 [
     {
@@ -45,36 +80,3 @@ Create an api with an endpoint `/employees` that reads from this database and re
     }
 ]
 ```
-
-## Requirements
-
-- The api must take an environment variable `PORT` and respond to requests on that port.
-- You provide basic setup instructions required to run the api.
-- `curl localhost:$PORT/employees` returns the described response.
-
-## Success
-
-- We can run the api from your setup instructions
-- The curl returns the described response
-- The api is written in Python or Go
-
-## Not Required
-
-- Tests
-- Logging, monitoring, or anything more than basic error handling
-
-## Submission
-
-- Respond to the email you received giving you this with:
-  - a zip file, or link to a git repo
-  - instructions on how to setup and run the code (could be included w/ zip/git)
-- We'll follow the setup instructions to test it on a local machine, then we'll get back to you.
-
-## Notes
-
-- Keep it simple
-- We expect this to take less than an hour, please try and limit your effort to that window.
-- If the api works, and returns what we requested, its a success.
-- Anything extra (tests, other endpoints, ...) is not worth bonus/etc.
-- We truly value your time and just want a basic benchmark and common piece of code to use in future interviews.
-- If we bring you in for in-person interviews we'll expand on this submission.
